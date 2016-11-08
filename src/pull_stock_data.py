@@ -1,7 +1,10 @@
 import time
 import requests
 from pymongo import MongoClient
-from csv_to_json import get_json_from_csv
+
+import sys, os
+sys.path.append(os.getcwd() + "/include")
+from c2j import get_json_from_csv
 
 client = MongoClient()
 db = client.Stock_Data
@@ -12,9 +15,11 @@ symbol = "GOOG"
 fields = "ask,bid\n"
 pricing_url = base_url + "?s=" + symbol + "&f=ab"
 
-csv_data = fields + requests.get(pricing_url).text
-json_data = get_json_from_csv(csv_data)
+while 1:
+    csv_data = fields + requests.get(pricing_url).text
+    json_data = get_json_from_csv(csv_data)
 
-collection = db.get_collection(symbol)
-collection.insert(json_data)
+    collection = db.get_collection(symbol)
+    collection.insert(json_data)
+    time.sleep(1)
 

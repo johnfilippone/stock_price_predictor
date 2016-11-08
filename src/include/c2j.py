@@ -1,4 +1,4 @@
-import os
+import sys, os
 import csv
 import json
 import codecs
@@ -38,7 +38,7 @@ def get_json_from_csv(csv_data, delimiter=','):
                     d[header] = row[i]
                 json_data.append(d)
         except (UnicodeDecodeError, UnicodeEncodeError):
-            print >> sys.stderr, "Format Error"
+            print >> sys.stderr, "CSV Format Error"
             pass
 
     # destroy temporary file

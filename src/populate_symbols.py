@@ -17,6 +17,12 @@ collections = {
                 "amex_symbols"   : open(os.getcwd() + "/../csv_files/amex_stocks.csv", "r")
               }
 
+# clear
+db.nasdaq_symbols.remove({})
+db.nyse_symbols.remove({})
+db.amex_symbols.remove({})
+
+# populate
 for key in collections:
     csv_data  = collections[key].read()
     json_data = get_json_from_csv(csv_data)
